@@ -39,14 +39,11 @@ def scrape_song_metadata_from_pages(url, limit=1000):
 
     # Maximum number of songs per page is 200. Larger values return pages of
     # default size 20.
-    params = {
-        "pageSize": 200,
-        "page": 1
-    }
+    params = {"pageSize": 200, "page": 1}
     response = requests.get(url, params=params)
     last_page_idx = find_last_page_idx(response.content)
 
-    for idx in range(1, last_page_idx+1):
+    for idx in range(1, last_page_idx + 1):
         if idx > 1:
             # For the first page, extract the data from the response object from
             # the request above.

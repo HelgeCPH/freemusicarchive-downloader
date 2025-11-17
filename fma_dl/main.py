@@ -33,23 +33,41 @@ def main(url, output_dir, meta=True, silent=False, limit=1000):
         print(f"Done! Downloaded {len(metadata)} songs to {output_dir}")
 
 
-
 def store_metadata(metadata, out_file):
     import json
+
     with out_file.open("w") as fp:
         json.dump(metadata, fp, indent=2)
-
 
 
 def cmd_main():
     descr = """Download music from the Free Music Archive (FMA)
 https://freemusicarchive.org/"""
     parser = argparse.ArgumentParser(description=descr)
-    parser.add_argument('url', type=str, help='URL of the webpage to download music from')
-    parser.add_argument('output_dir', type=str, help='Output directory for downloaded songs')
-    parser.add_argument('--meta', default=True, action=argparse.BooleanOptionalAction, help='Store metadata scraped from FMA')
-    parser.add_argument('--silent', default=False, action=argparse.BooleanOptionalAction, help='Do not log each downloaded song')
-    parser.add_argument('--limit', type=int, default=10, help='Maximum number of songs to download (default: 10)')
+    parser.add_argument(
+        "url", type=str, help="URL of the webpage to download music from"
+    )
+    parser.add_argument(
+        "output_dir", type=str, help="Output directory for downloaded songs"
+    )
+    parser.add_argument(
+        "--meta",
+        default=True,
+        action=argparse.BooleanOptionalAction,
+        help="Store metadata scraped from FMA",
+    )
+    parser.add_argument(
+        "--silent",
+        default=False,
+        action=argparse.BooleanOptionalAction,
+        help="Do not log each downloaded song",
+    )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=10,
+        help="Maximum number of songs to download (default: 10)",
+    )
 
     args = parser.parse_args()
     url = args.url

@@ -24,7 +24,7 @@ def get_error_message(result):
 
 
 def validate_url(url):
-    if not url.startswith('https://freemusicarchive.org/'):
+    if not url.startswith("https://freemusicarchive.org/"):
         return UrlValidationResult.INVALID_URL
 
     # Remove query parameters from URL
