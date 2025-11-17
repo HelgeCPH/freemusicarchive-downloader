@@ -1,41 +1,64 @@
-# Free Music Archive Downloader
+# Free Music Archive Downloader (`fma-dl`)
 
-This is a command-line tool for downloading music from the Free Music Archive (https://freemusicarchive.org). The script allows you to download songs, extract metadata, and prune songs with missing metadata.
+This is a command-line tool for downloading music from the [Free Music Archive (FMA)](https://freemusicarchive.org).
+The script allows you to download songs and store respective metadata.
+Download URLs and metadata are extracted from FMAs websites.
 
-## Features
+This program can be used to download songs, e.g., from FMAs charts or genres.
 
-- Download songs from a specified FMA URL
-- Option to log each downloaded song
-- Extract metadata from downloaded songs
-- Prune songs with missing metadata
+This is a fork and refactored version from [`yallowraven`'s freemusicarchive-downloader](https://github.com/yallowraven/freemusicarchive-downloader)
+
 
 ## Requirements
 
-- Python 3.x
+- Python > 3.11 (above 3.7 should work but I did not test)
+- [Poetry](https://python-poetry.org/) for development
+
 
 ## Installation
 
-1. Clone this repository to your local machine.
-2. Install the required Python libraries: ```pip install -r requirements.txt```
+### Running `fma-dl` with [`pipx`](https://pipx.pypa.io)
+
+1. [Install `pipx`](https://pipx.pypa.io/stable/installation/)
+2. `pipx install git+https://github.com/HelgeCPH/freemusicarchive-downloader`
+3. Run `fma-dl` as described below under usage.
+
+### From PyPI
+
+TBD
+
+### For development
+
+1. Clone this repository.
+2. Install the required dependencies and this tool: `poetry install`
+3. Use this tool in its virtual environment: `poetry shell`, see usage below.
+
 
 ## Usage
 
 ```bash
-python ./main.py <url> <output_dir> [--silent] [--meta] [--prune-no-meta]
+fma-dl [-h] [--meta | --no-meta] [--silent | --no-silent] [--limit LIMIT] url output_dir
 
-<url>: URL of the webpage to download music from
-<output_dir>: Output directory for downloaded songs
---silent: Do not log each downloaded song
---meta: Extract metadata from downloaded songs
---prune-no-meta: Prune songs with missing metadata
+positional arguments:
+  url                   URL of the webpage to download music from
+  output_dir            Output directory for downloaded songs
+
+options:
+  -h, --help            show this help message and exit
+  --meta, --no-meta     Store metadata scraped from FMA
+  --silent, --no-silent
+                        Do not log each downloaded song
+  --limit LIMIT         Maximum number of songs to download (default: 10)
 ```
 
-## Example
 
-To download all songs from the "Blues" collection on the Free Music Archive and extract metadata for each song without pruning:
-```
-python download.py https://freemusicarchive.org/genre/Blues <output_dir> --meta
-```
+## Examples
 
-## How this was made
-You can find the implementation nodes at https://github.com/yallowraven/freemusicarchive-downloader-notes
+- Download the 15 highest ranked songs from the all time charts to `/tmp/music`:
+  ```
+  fma-dl https://freemusicarchive.org/music/charts/all /tmp/music --limit 15 --silent --no-meta
+  ```
+- Download the 142 most recent songs from the genre "Blues" to `/tmp/music`:
+  ```
+  fma-dl https://freemusicarchive.org/genre/Blues <output_dir> --meta
+  ```
