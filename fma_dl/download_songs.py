@@ -1,27 +1,22 @@
-# Thx ChatGPT
+import requests
+import shutil
+from pathlib import Path
 
-import os
-import urllib.request
 
-def download_songs(urls, dest, silent):
+def download_song(url, local_file):
+    if not local_file.exists():
+        with requests.get(url, stream=True) as response:
+            with local_file.open("wb") as fp:
+                shutil.copyfileobj(response.raw, fp)
 
-    # create the songs directory if it doesn't exist
-    if not os.path.exists(dest):
-        os.makedirs(dest)
+    return local_file
 
-    for url in urls:
-        # remove any whitespace at the beginning or end of the url
-        url = url.strip()
 
+def download_songs(metadata, destination_dir, silent=False):
+    for song_metadata in metadata:
+        target_file = Path(destination_dir, song_metadata["fileName"])
+        url = song_metadata["fileUrl"]
         if not silent:
-            print('Downloading song: ' + url)
-            
-        # create a filename for the downloaded file by taking the last part of the URL
-        filename = url.split('/')[-1]
+            print(f"Downloading {url} to {target_file}...")
 
-        req = urllib.request.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36')
-
-        # make the request and save the downloaded file
-        with urllib.request.urlopen(req) as response, open(os.path.join(dest, filename), 'wb') as outfile:
-            outfile.write(response.read())
+        download_song(url, target_file)

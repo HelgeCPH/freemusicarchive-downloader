@@ -10,12 +10,12 @@ packages = [{include = "fma_dl"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 requests = "^2.32.5"
-mutagen = "^1.47.0"
 beautifulsoup4 = "^4.14.2"
 
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^9.7.0"
+black = "^25.11.0"
 
 [build-system]
 requires = ["poetry-core"]
