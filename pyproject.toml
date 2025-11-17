@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "fma-dl"
+version = "0.1.0"
+description = "CLI tool to download music from the Free Music Archive (FMA)."
+authors = ["yallowraven", "HelgeCPH <ropf@itu.dk>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "fma_dl"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.32.5"
+mutagen = "^1.47.0"
+beautifulsoup4 = "^4.14.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^9.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+fma-dl = "fma_dl.main:cmd_main"
